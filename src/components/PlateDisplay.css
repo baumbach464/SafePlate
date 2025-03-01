@@ -1,0 +1,23 @@
+.plate-display {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+    gap: 5px;
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+  }
+  .plate-item {
+    background: rgba(255,255,255,0.8);
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8em;
+    padding: 2px;
+  }
+  .plate-item .food-emoji {
+    font-size: 1.2em;
+  }
+  

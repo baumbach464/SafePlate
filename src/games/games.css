@@ -1,0 +1,35 @@
+/* games.css - a consolidated file for multiple mini-game styles */
+
+/* Example for a shared .game-container class */
+.game-container {
+    max-width: 1200px;
+    margin: 40px auto;
+    background: #fff;
+    border-radius: 15px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+    padding: 30px;
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  /* Shared .game-title, .instructions, etc. */
+  .game-title {
+    font-size: 2.4em;
+    color: #e67e22;
+    margin-bottom: 10px;
+  }
+  .instructions {
+    font-size: 1.3em;
+    color: #555;
+    margin-bottom: 30px;
+  }
+  
+  /* Additional classes for scoreboard, messages, etc. */
+  .scoreboard {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    font-size: 1.2em;
+    margin-bottom: 20px;
+  }
+  
