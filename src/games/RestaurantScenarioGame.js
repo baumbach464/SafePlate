@@ -1,54 +1,90 @@
-// RestaurantScenarioGame.js
+// /src/games/RestaurantScenarioGame.js
 import React, { useContext, useState } from 'react';
 import { UserSettingsContext } from '../UserSettingsContext';
 import './games.css';
 
 function RestaurantScenarioGame({ next }) {
-  const { allergen, score, setScore, lives, setLives } = useContext(UserSettingsContext);
-  const [finished, setFinished] = useState(false);
+  const { allergen, lives, setLives, score, setScore } = useContext(UserSettingsContext);
+  const [currentStep, setCurrentStep] = useState(0);
+  const [feedback, setFeedback] = useState('');
 
-  // Example scenario: user sees a menu with hidden allergens, must ask questions or read carefully
-  // If they choose a dish with the allergen, they lose a life or some points
+  // A branching narrative for the restaurant scenario
+  const steps = [
+    {
+      prompt: "You're at a busy restaurant. A waiter approaches and asks if you have any dietary restrictions.",
+      choices: [
+        { text: "Tell the waiter about your allergy", nextStep: 1 },
+        { text: "Stay silent", nextStep: 2 }
+      ]
+    },
+    {
+      prompt: "The waiter assures you that the chef is aware and can accommodate your needs. Now, choose a dish:",
+      choices: [
+        { text: "Peanut Sauce Noodles", allergens: ['peanuts'], nextStep: 3 },
+        { text: "Grilled Chicken", allergens: [], nextStep: 3 },
+        { text: "Cheesy Breadsticks", allergens: ['milk', 'wheat'], nextStep: 3 }
+      ]
+    },
+    {
+      prompt: "The waiter did not note your allergy. You receive a dish that might contain allergens. Choose wisely:",
+      choices: [
+        { text: "Ask the waiter to check the dish", nextStep: 1 },
+        { text: "Eat the dish anyway", allergens: ['peanuts'], nextStep: 3 }
+      ]
+    },
+    {
+      prompt: "Result:",
+      choices: []
+    }
+  ];
 
-  const handleChooseDish = (dish) => {
-    if (dish.allergens.includes(allergen)) {
+  const handleChoice = (choice) => {
+    if (choice.allergens && choice.allergens.includes(allergen)) {
+      setFeedback(`Oops! That dish contains your allergen.`);
       setLives(lives - 1);
       if (lives - 1 <= 0) {
-        next(0, true); // lost the game
+        next(0, true);
+        return;
       }
-    } else {
+      setScore(score - 10);
+    } else if (choice.text.includes("Tell the waiter") || choice.text.includes("Ask the waiter")) {
+      setFeedback("Great! Communication is key.");
       setScore(score + 20);
-      setFinished(true);
+    } else {
+      setFeedback("Good choice! That dish is safe.");
+      setScore(score + 30);
+    }
+    // Advance to result step if applicable
+    if (currentStep < 2) {
+      setCurrentStep(choice.nextStep);
+    } else {
+      // Finalize the game after a delay
+      setTimeout(() => {
+        next(score + 30, false);
+      }, 1500);
     }
   };
-
-  if (finished) {
-    // e.g. user found a safe dish
-    next(20, false);
-    return null;
-  }
 
   return (
     <div className="game-container">
       <h2 className="game-title">Restaurant Scenario</h2>
-      <p className="instructions">
-        Choose a dish that does NOT contain your allergen. If you pick incorrectly, you lose a life!
-      </p>
-
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', maxWidth: '500px', margin: '0 auto' }}>
-        <button onClick={() => handleChooseDish({ name: 'Peanut Sauce Noodles', allergens: ['peanuts'] })}>
-          Peanut Sauce Noodles
+      <p className="instructions">{steps[currentStep].prompt}</p>
+      {steps[currentStep].choices.length > 0 ? (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '15px', maxWidth: '600px', margin: '0 auto' }}>
+          {steps[currentStep].choices.map((choice, index) => (
+            <button key={index} className="start-game-button" onClick={() => handleChoice(choice)}>
+              {choice.text}
+            </button>
+          ))}
+        </div>
+      ) : (
+        <p className="plate-message">{feedback}</p>
+      )}
+      {feedback && currentStep === 2 && (
+        <button className="start-game-button" style={{ marginTop: '20px' }} onClick={() => handleChoice({ nextStep: 3 })}>
+          Finish Level
         </button>
-        <button onClick={() => handleChooseDish({ name: 'Grilled Fish', allergens: ['fish'] })}>
-          Grilled Fish
-        </button>
-        <button onClick={() => handleChooseDish({ name: 'Tomato Pasta', allergens: [] })}>
-          Tomato Pasta
-        </button>
-        <button onClick={() => handleChooseDish({ name: 'Cheesy Breadsticks', allergens: ['milk', 'wheat'] })}>
-          Cheesy Breadsticks
-        </button>
-      </div>
+      )}
     </div>
   );
 }

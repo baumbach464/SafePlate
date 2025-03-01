@@ -1,7 +1,9 @@
-/* games.css - a consolidated file for multiple mini-game styles */
+/* games.css */
 
-/* Example for a shared .game-container class */
-.game-container {
+/* =============================
+   Global Game Container
+   ============================= */
+   .game-container {
     max-width: 1200px;
     margin: 40px auto;
     background: #fff;
@@ -12,7 +14,9 @@
     font-family: 'Poppins', sans-serif;
   }
   
-  /* Shared .game-title, .instructions, etc. */
+  /* =============================
+     Titles & Instructions
+     ============================= */
   .game-title {
     font-size: 2.4em;
     color: #e67e22;
@@ -24,12 +28,223 @@
     margin-bottom: 30px;
   }
   
-  /* Additional classes for scoreboard, messages, etc. */
+  /* =============================
+     Timer Display (if applicable)
+     ============================= */
+  .timer-display {
+    font-size: 1.2em;
+    color: #e74c3c;
+    margin-bottom: 20px;
+  }
+  
+  /* =============================
+     Food Items Grid for Sorting Game
+     ============================= */
+  .food-items-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    gap: 20px;
+    justify-items: center;
+    margin-bottom: 30px;
+  }
+  
+  /* =============================
+     Food Button (for Sorting Game)
+     ============================= */
+  .food-button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 15px 20px;
+    border: none;
+    border-radius: 20px;
+    background-color: #4fc1e9;
+    color: #fff;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+    min-width: 110px;
+    min-height: 110px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  }
+  .food-button:hover {
+    transform: scale(1.05);
+    background-color: #3bb1d0;
+  }
+  .food-emoji {
+    font-size: 2em;
+    margin-bottom: 6px;
+  }
+  .food-name {
+    font-size: 1em;
+    font-weight: 600;
+    text-align: center;
+  }
+  
+  /* =============================
+     Plate Area for Sorting Game
+     ============================= */
+  .plate-area {
+    margin-top: 30px;
+  }
+  .plate-wrapper {
+    width: 270px;
+    height: 270px;
+    background-color: #f9f9f9;
+    border: 2px solid #ccc;
+    border-radius: 50%;
+    margin: 0 auto;
+    position: relative;
+    overflow: hidden;
+  }
+  .plate-wrapper::before {
+    content: "🍽";
+    position: absolute;
+    font-size: 8rem;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0.15;
+    color: #aaa;
+    pointer-events: none;
+  }
+  .plate {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+  }
+  .plate-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
+    gap: 10px;
+    width: 100%;
+    height: 100%;
+    padding: 15px;
+    box-sizing: border-box;
+    position: relative;
+  }
+  .plate-item {
+    background-color: rgba(255,255,255,0.8);
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 6px;
+    position: relative;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    animation: popIn 0.3s ease;
+  }
+  .plate-item-emoji {
+    font-size: 1.8em;
+    margin-bottom: 4px;
+  }
+  .remove-button {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    background: none;
+    border: none;
+    font-size: 1em;
+    cursor: pointer;
+    color: #888;
+    transition: color 0.2s ease;
+  }
+  .remove-button:hover {
+    color: #e74c3c;
+  }
+  .plate-message {
+    font-size: 1.2em;
+    font-weight: 600;
+    color: #27ae60;
+    margin-top: 10px;
+    animation: fadeIn 0.5s ease-in;
+  }
+  
+  /* =============================
+     Restaurant Scenario Game Styles
+     ============================= */
+  .restaurant-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-width: 600px;
+    margin: 20px auto;
+  }
+  
+  /* =============================
+     Label Reading Game Styles
+     ============================= */
+  .ingredient-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: center;
+    margin-bottom: 30px;
+  }
+  .ingredient-word {
+    padding: 12px 18px;
+    border: 1px solid #aaa;
+    border-radius: 10px;
+    cursor: pointer;
+    background-color: #fff;
+    transition: background-color 0.3s ease, transform 0.2s;
+    font-size: 1.1em;
+  }
+  .ingredient-word:hover {
+    background-color: #f0f0f0;
+    transform: scale(1.05);
+  }
+  .ingredient-word.selected {
+    background-color: #4fc1e9;
+    color: #fff;
+    border-color: #3bb1d0;
+  }
+  
+  /* =============================
+     Shared Scoreboard Styles
+     ============================= */
   .scoreboard {
     display: flex;
     justify-content: center;
     gap: 30px;
     font-size: 1.2em;
     margin-bottom: 20px;
+  }
+  
+  /* =============================
+     Animations
+     ============================= */
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes popIn {
+    0% { transform: scale(0.7); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+  }
+  
+  /* =============================
+     Responsive Adjustments
+     ============================= */
+  /* For tablets and mobile */
+  @media screen and (max-width: 768px) {
+    .game-layout {
+      grid-template-columns: 1fr;
+    }
+    .food-items-grid {
+      grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    }
+    .plate-wrapper {
+      width: 220px;
+      height: 220px;
+    }
+    .game-title {
+      font-size: 2em;
+    }
+    .instructions {
+      font-size: 1.1em;
+    }
   }
   

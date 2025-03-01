@@ -1,25 +1,31 @@
-/* App.css - merges global layout, header, footer, modals, plus partial styling for games */
+/* ============================================
+   Global CSS for SafePlate App
+   ============================================ */
 
+/* Base Styles */
 body {
     margin: 0;
     font-family: 'Poppins', sans-serif;
     background-color: #f4f7f9;
     color: #333;
     line-height: 1.6;
+    font-size: 16px;
   }
   
   main {
     padding: 20px;
   }
   
-  /* Header */
+  /* ============================================
+     Header
+     ============================================ */
   .header {
     display: flex;
     align-items: center;
     justify-content: space-between;
     background: linear-gradient(135deg, #4fc1e9, #a0d468);
     padding: 15px 30px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
   }
   .header .logo {
     height: 60px;
@@ -41,7 +47,9 @@ body {
     color: #ffce54;
   }
   
-  /* Footer */
+  /* ============================================
+     Footer
+     ============================================ */
   .footer {
     background-color: #e0e0e0;
     padding: 15px;
@@ -50,7 +58,9 @@ body {
     margin-top: 40px;
   }
   
-  /* Modal */
+  /* ============================================
+     Modal
+     ============================================ */
   .modal-overlay {
     position: fixed;
     top: 0;
@@ -82,7 +92,9 @@ body {
     cursor: pointer;
   }
   
-  /* Common Buttons */
+  /* ============================================
+     Common Buttons
+     ============================================ */
   .selection-button,
   .start-game-button {
     background-color: #4fc1e9;
@@ -105,7 +117,9 @@ body {
     background-color: #3bb1d0;
   }
   
-  /* Game Cards */
+  /* ============================================
+     Game Cards & Scoreboard
+     ============================================ */
   .game-card {
     background-color: #a0d468;
     padding: 20px 30px;
@@ -120,8 +134,6 @@ body {
   .game-card:hover {
     transform: translateY(-5px);
   }
-  
-  /* Scoreboard */
   .scoreboard {
     display: flex;
     justify-content: center;
@@ -130,7 +142,39 @@ body {
     margin-bottom: 20px;
   }
   
-  /* Food Buttons (used in Sorting Plate, etc.) */
+  /* ============================================
+     Game Container & Utility Classes
+     ============================================ */
+  .game-container {
+    max-width: 1200px;
+    margin: 40px auto;
+    background: #fff;
+    border-radius: 15px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+    padding: 30px;
+    text-align: center;
+  }
+  .game-title {
+    font-size: 2.4em;
+    color: #e67e22;
+    margin-bottom: 10px;
+  }
+  .instructions {
+    font-size: 1.3em;
+    color: #555;
+    margin-bottom: 30px;
+  }
+  
+  /* ============================================
+     Food Items & Plate for Sorting Game
+     ============================================ */
+  .food-items-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    gap: 20px;
+    justify-items: center;
+    margin-bottom: 30px;
+  }
   .food-button {
     display: flex;
     flex-direction: column;
@@ -152,25 +196,349 @@ body {
     transform: scale(1.05);
     background-color: #3bb1d0;
   }
-  
-  /* Utility */
-  .game-container {
-    max-width: 1200px;
-    margin: 40px auto;
-    background: #fff;
-    border-radius: 15px;
-    box-shadow: 0 8px 16px rgba(0,0,0,0.15);
-    padding: 30px;
+  .food-emoji {
+    font-size: 2em;
+    margin-bottom: 6px;
+  }
+  .food-name {
+    font-size: 1em;
+    font-weight: 600;
     text-align: center;
   }
-  .game-title {
+  .plate-area {
+    margin-top: 30px;
+  }
+  .plate-wrapper {
+    width: 270px;
+    height: 270px;
+    background-color: #f9f9f9;
+    border: 2px solid #ccc;
+    border-radius: 50%;
+    margin: 0 auto;
+    position: relative;
+    overflow: hidden;
+  }
+  .plate-wrapper::before {
+    content: "🍽";
+    position: absolute;
+    font-size: 8rem;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0.15;
+    color: #aaa;
+    pointer-events: none;
+  }
+  .plate {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+  }
+  .plate-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
+    gap: 10px;
+    width: 100%;
+    height: 100%;
+    padding: 15px;
+    box-sizing: border-box;
+    position: relative;
+  }
+  .plate-item {
+    background-color: rgba(255,255,255,0.8);
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 6px;
+    position: relative;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    animation: popIn 0.3s ease;
+  }
+  .plate-item-emoji {
+    font-size: 1.8em;
+    margin-bottom: 4px;
+  }
+  .remove-button {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    background: none;
+    border: none;
+    font-size: 1em;
+    cursor: pointer;
+    color: #888;
+    transition: color 0.2s ease;
+  }
+  .remove-button:hover {
+    color: #e74c3c;
+  }
+  .plate-message {
+    font-size: 1.2em;
+    font-weight: 600;
+    color: #27ae60;
+    margin-top: 10px;
+    animation: fadeIn 0.5s ease-in;
+  }
+  
+  /* ============================================
+     Tips & Quiz Page
+     ============================================ */
+  .tips-quiz-container {
+    max-width: 800px;
+    margin: 40px auto;
+    background: #fff;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+    text-align: center;
+  }
+  .quiz-title {
     font-size: 2.4em;
     color: #e67e22;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
   }
-  .instructions {
-    font-size: 1.3em;
+  .timer {
+    font-size: 1.2em;
+    color: #e74c3c;
+    margin-bottom: 20px;
+  }
+  .question-container {
+    margin-bottom: 30px;
+  }
+  .question-text {
+    font-size: 1.4em;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  .choices-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+  }
+  .choice-button {
+    background-color: #4fc1e9;
+    color: #fff;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 30px;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+    width: 80%;
+    max-width: 400px;
+  }
+  .choice-button:hover {
+    transform: scale(1.05);
+    background-color: #3bb1d0;
+  }
+  .choice-button.selected {
+    background-color: #3bb1d0;
+  }
+  .feedback {
+    font-size: 1.2em;
+    font-weight: 600;
+    color: #27ae60;
+    margin-top: 20px;
+  }
+  .management-tip {
+    font-size: 1.1em;
+    color: #555;
+    margin-top: 10px;
+  }
+  .next-button {
+    background-color: #a0d468;
+    color: #fff;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 30px;
+    font-size: 1.1em;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+  }
+  .next-button:hover {
+    transform: scale(1.05);
+    background-color: #8ec160;
+  }
+  .quiz-summary {
+    text-align: center;
+  }
+  .quiz-score {
+    font-size: 1.6em;
+    font-weight: 600;
+    color: #e67e22;
+    margin-bottom: 20px;
+  }
+  .quiz-tip {
+    font-size: 1.2em;
     color: #555;
     margin-bottom: 30px;
+  }
+  
+  /* ============================================
+     Resources / About Allergies / Resources Page Styles
+     ============================================ */
+  .resources-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+  }
+  .resources-title {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #4a4a4a;
+    font-size: 2.5em;
+  }
+  .resources-intro {
+    text-align: center;
+    margin-bottom: 40px;
+    font-size: 1.2em;
+    color: #333;
+  }
+  .resources-section {
+    margin-bottom: 30px;
+  }
+  .section-title {
+    cursor: pointer;
+    color: #4fc1e9;
+    font-size: 1.8em;
+    margin-bottom: 10px;
+  }
+  .section-content {
+    padding: 20px;
+    font-size: 1.1em;
+    color: #333;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    margin-bottom: 20px;
+  }
+  
+  /* Allergen Grid and Cards */
+  .allergen-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 20px;
+  }
+  .allergen-card {
+    background-color: #4fc1e9;
+    border-radius: 10px;
+    padding: 20px;
+    color: #fff;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+  }
+  .allergen-card:hover {
+    transform: scale(1.05);
+  }
+  .allergen-emoji {
+    font-size: 3em;
+    margin-bottom: 10px;
+  }
+  .allergen-label {
+    font-size: 1.3em;
+    font-weight: 600;
+  }
+  
+  /* Tabbed Interface for About Allergies Modal */
+  .tab-navigation {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 20px;
+  }
+  .tab-button {
+    padding: 10px 20px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    transition: border-bottom 0.3s ease;
+  }
+  .tab-button.active {
+    border-bottom: 2px solid #4fc1e9;
+  }
+  .tab-content {
+    text-align: left;
+    font-size: 1.1em;
+    color: #333;
+    max-height: 500px;
+    overflow-y: auto;
+  }
+  
+  /* Restaurant Communication Section */
+  .resources-section .restaurant-communication {
+    margin-top: 20px;
+    text-align: center;
+  }
+  .resources-section .restaurant-communication select {
+    padding: 8px;
+    font-size: 1em;
+  }
+  .resources-section .restaurant-communication button {
+    margin-top: 10px;
+    background-color: #4fc1e9;
+    color: #fff;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 30px;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+  }
+  .resources-section .restaurant-communication button:hover {
+    transform: scale(1.05);
+    background-color: #3bb1d0;
+  }
+  .resources-section .restaurant-communication .restaurant-message {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    font-size: 1.1em;
+    color: #333;
+    margin-top: 20px;
+  }
+  
+  /* ============================================
+     Responsive Adjustments
+     ============================================ */
+  @media screen and (max-width: 768px) {
+    .game-container {
+      max-width: 90%;
+      padding: 20px;
+    }
+    .header, .footer {
+      padding: 10px 20px;
+    }
+    .game-title, .resources-title, .quiz-title, .section-title {
+      font-size: 2em;
+    }
+    .instructions, .question-text, .resources-intro {
+      font-size: 1.1em;
+    }
+    .food-items-grid {
+      grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    }
+    .plate-wrapper {
+      width: 220px;
+      height: 220px;
+    }
+    .choice-button, .next-button, .start-game-button {
+      font-size: 1em;
+    }
+  }
+  
+  /* ============================================
+     Animations
+     ============================================ */
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes popIn {
+    0% { transform: scale(0.7); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
   }
   

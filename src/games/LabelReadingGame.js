@@ -1,17 +1,38 @@
-// LabelReadingGame.js
-import React, { useContext, useState } from 'react';
+// /src/games/LabelReadingGame.js
+import React, { useContext, useState, useEffect } from 'react';
 import { UserSettingsContext } from '../UserSettingsContext';
 import './games.css';
 
 function LabelReadingGame({ next }) {
-  const { allergen, score, setScore, lives, setLives } = useContext(UserSettingsContext);
+  const { allergen, lives, setLives, score, setScore, ageGroup } = useContext(UserSettingsContext);
   const [selectedWords, setSelectedWords] = useState([]);
   const [feedback, setFeedback] = useState('');
-  const [done, setDone] = useState(false);
+  const [timeLeft, setTimeLeft] = useState(ageGroup === 'teens' ? 20 : 30);
+  const [finished, setFinished] = useState(false);
 
-  // For demonstration, a short label with hidden allergen references
-  const label = "Peanut oil, sugar, wheat flour, salt";
-  const words = label.split(', ');
+  const labelText = "Peanut oil, sugar, wheat flour, salt, milk powder, egg whites, natural flavors";
+  const words = labelText.split(', ');
+
+  // Timer for older kids
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTimeLeft(prev => {
+        if (prev <= 1) {
+          clearInterval(interval);
+          setFeedback("Time's up! You didn't finish the challenge.");
+          setLives(lives - 1);
+          if (lives - 1 <= 0) {
+            next(0, true);
+            return 0;
+          }
+          setFinished(true);
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [lives, next]);
 
   const handleWordClick = (word) => {
     if (!selectedWords.includes(word)) {
@@ -20,59 +41,46 @@ function LabelReadingGame({ next }) {
   };
 
   const handleFinish = () => {
-    // Check if user found all relevant allergens
-    const foundAllergen = selectedWords.some(w => w.toLowerCase().includes(allergen));
-    if (foundAllergen) {
-      setFeedback(`Oops! This label contains your allergen.`);
+    const containsAllergen = selectedWords.some(word => word.toLowerCase().includes(allergen));
+    if (containsAllergen) {
+      setFeedback(`Oops! You selected a word indicating your allergen.`);
       setLives(lives - 1);
       if (lives - 1 <= 0) {
         next(0, true);
+        return;
       }
     } else {
-      setScore(score + 30);
-      setFeedback(`Good job! You avoided ${allergen}!`);
+      setFeedback(`Great job! You avoided any dangerous ingredients.`);
+      setScore(score + 40);
     }
-    setDone(true);
+    setFinished(true);
   };
-
-  if (done) {
-    // Wait a moment or provide a button to continue
-    return (
-      <div className="game-container">
-        <h2 className="game-title">Label Reading Results</h2>
-        <p>{feedback}</p>
-        <button onClick={() => next(30, false)}>Continue</button>
-      </div>
-    );
-  }
 
   return (
     <div className="game-container">
       <h2 className="game-title">Label Reading Challenge</h2>
       <p className="instructions">
-        Tap words in the ingredient list that might indicate your allergen ({allergen}).
+        Tap the words in the ingredient list that indicate your allergen ({allergen}).
+        { (ageGroup === '8-12' || ageGroup === 'teens') && <span> Time remaining: {timeLeft} sec</span> }
       </p>
-      <div style={{ display: 'flex', gap: '10px', justifyContent: 'center', flexWrap: 'wrap', marginBottom: '20px' }}>
+      <div className="ingredient-list">
         {words.map((word, index) => (
           <span
             key={index}
             onClick={() => handleWordClick(word)}
-            style={{
-              padding: '10px',
-              border: selectedWords.includes(word) ? '2px solid #4fc1e9' : '1px solid #aaa',
-              borderRadius: '5px',
-              cursor: 'pointer',
-              background: selectedWords.includes(word) ? '#4fc1e9' : '#fff',
-              color: selectedWords.includes(word) ? '#fff' : '#333'
-            }}
+            className={`ingredient-word ${selectedWords.includes(word) ? 'selected' : ''}`}
           >
             {word}
           </span>
         ))}
       </div>
-      <button onClick={handleFinish} className="start-game-button">
-        Done
-      </button>
+      <button className="start-game-button" onClick={handleFinish}>Submit Answers</button>
+      {feedback && <p className="plate-message">{feedback}</p>}
+      {finished && (
+        <button className="start-game-button" style={{ marginTop: '20px' }} onClick={() => next(40, false)}>
+          Continue
+        </button>
+      )}
     </div>
   );
 }
