@@ -1,0 +1,11 @@
+{
+  "files": {
+    "main.css": "/SafePlate/static/css/main.f9d1ac6f.css",
+    "main.js": "/SafePlate/static/js/main.ff5a93c9.js",
+    "index.html": "/SafePlate/index.html"
+  },
+  "entrypoints": [
+    "static/css/main.f9d1ac6f.css",
+    "static/js/main.ff5a93c9.js"
+  ]
+}
