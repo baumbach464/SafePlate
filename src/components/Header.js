@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 function Header() {
   return (
     <header className="header">
-      <img src="/logo.png" alt="SafePlate Logo" className="logo" />
+      <img src={process.env.PUBLIC_URL + "/logo.png"} alt="SafePlate Logo" className="logo" />
       <nav>
         <ul>
           <li><Link to="/">Home</Link></li>
