@@ -1,11 +1,13 @@
 {
   "files": {
-    "main.css": "/SafePlate/static/css/main.f9d1ac6f.css",
-    "main.js": "/SafePlate/static/js/main.ff5a93c9.js",
-    "index.html": "/SafePlate/index.html"
+    "main.css": "/SafePlate/static/css/main.3a6518b0.css",
+    "main.js": "/SafePlate/static/js/main.a4600720.js",
+    "index.html": "/SafePlate/index.html",
+    "main.3a6518b0.css.map": "/SafePlate/static/css/main.3a6518b0.css.map",
+    "main.a4600720.js.map": "/SafePlate/static/js/main.a4600720.js.map"
   },
   "entrypoints": [
-    "static/css/main.f9d1ac6f.css",
-    "static/js/main.ff5a93c9.js"
+    "static/css/main.3a6518b0.css",
+    "static/js/main.a4600720.js"
   ]
 }
