@@ -12,7 +12,7 @@ import AboutAllergies from './pages/AboutAllergies';
 import Resources from './pages/Resources';
 import TipsQuiz from './pages/TipsQuiz';
 
-// New game components (make sure these files are placed in src/games/)
+// New game components for each age group
 import SafePlateMatch from './games/SafePlateMatch';
 import ColorfulFoodParade from './games/ColorfulFoodParade';
 import SafePlateSorting from './games/SafePlateSorting';
@@ -36,7 +36,7 @@ function App() {
             <Route path="/resources" element={<Resources />} />
             <Route path="/tips-quiz" element={<TipsQuiz />} />
 
-            {/* New game routes */}
+            {/* New Game Routes */}
             <Route path="/games/safeplate-match" element={<SafePlateMatch />} />
             <Route path="/games/colorful-food-parade" element={<ColorfulFoodParade />} />
             <Route path="/games/safeplate-sorting" element={<SafePlateSorting />} />
