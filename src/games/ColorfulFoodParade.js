@@ -1,7 +1,8 @@
 // src/games/ColorfulFoodParade.js
 import React, { useState, useEffect, useContext } from 'react';
 import { UserSettingsContext } from '../UserSettingsContext';
-import { FOOD_ITEMS } from '../foodItems';
+import { FOOD_ITEMS } from '../data/foodItems';
+
 
 const randomBetween = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
 

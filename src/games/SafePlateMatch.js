@@ -1,7 +1,8 @@
 // src/games/SafePlateMatch.js
 import React, { useState, useEffect, useContext } from 'react';
 import { UserSettingsContext } from '../UserSettingsContext';
-import { FOOD_ITEMS } from '../foodItems';
+import { FOOD_ITEMS } from '../data/foodItems';
+
 
 // Utility: Pick a random item from an array.
 function getRandomItem(items) {

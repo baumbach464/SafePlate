@@ -1,7 +1,8 @@
 // src/games/AllergyMasterMealPlanner.js
 import React, { useState, useContext } from 'react';
 import { UserSettingsContext } from '../UserSettingsContext';
-import { FOOD_ITEMS } from '../foodItems';
+import { FOOD_ITEMS } from '../data/foodItems';
+
 
 function AllergyMasterMealPlanner({ onReturnToMenu }) {
   const { allergen } = useContext(UserSettingsContext);
